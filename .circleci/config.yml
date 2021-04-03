@@ -1,0 +1,33 @@
+version: 2.1
+
+anchors:
+  context: &context
+    context: rancher2_pipeline_demo
+    filters:
+      branches:
+        only: master
+
+orbs:
+  om-common-build: order-metrics/om-common-build@0.0
+  om-ecr: order-metrics/om-ecr@0.0
+  om-slack: order-metrics/om-slack@0.0
+
+jobs:
+  send-success-message:
+    executor: om-common-build/default
+    steps:
+      - om-slack/send-success-message
+
+workflows:
+  build:
+    jobs:
+      - om-ecr/build-push:
+          <<: *context
+          path: ./
+          dockerfile: ./docker/Dockerfile
+          docker-layer-caching: false
+          tag: test
+      - send-success-message:
+          <<: *context
+          requires:
+            - om-ecr/build-push
