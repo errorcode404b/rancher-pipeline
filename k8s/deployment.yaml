@@ -6,15 +6,15 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: nginx
+      app: nginx-app
   replicas: 1
   template:
     metadata:
       labels:
-        app: nginx
+        app: nginx-app
     spec:
       containers:
-      - name: nginx
+      - name: nginx-app
         imagePullPolicy: Always
         image: nginx
 
@@ -22,13 +22,13 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: nginx
+  name: nginx-app
   namespace: rke-pipeline
   annotations:
     external-dns.alpha.kubernetes.io: rkepipeline.n3qa.n3bytes.com
 spec:
   selector:
-    app: nginx
+    app: nginx-app
   ports:
     - port: 80
 ---
