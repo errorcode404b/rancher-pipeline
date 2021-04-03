@@ -6,23 +6,23 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: nginx-pipeline-demo
+      app: nginx
   replicas: 1
   template:
     metadata:
       labels:
-        app: nginx-pipeline-demo
+        app: nginx
     spec:
       containers:
-      - name: nginx-pipeline-demo
+      - name: nginx
         imagePullPolicy: Always
-        image: ${CICD_IMAGE}:${CICD_GIT_COMMIT}
+        image: nginx
 
 ---
 kind: Service
 apiVersion: v1
 metadata:
-  name: nginx-pipeline-demo-service
+  name: nginx
   namespace: rke-pipeline
   annotations:
     external-dns.alpha.kubernetes.io: rkepipeline.n3qa.n3bytes.com
@@ -46,5 +46,5 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: nginx-pipeline-demo-service
+              serviceName: nginx-service
               servicePort: 80
