@@ -18,7 +18,7 @@ run: build
 	docker run -it -p 8080:80 ${IMAGE_TAG}:${SHA} /bin/sh
 
 apply:
-	kubectx rke-pipeline
+	kubectx rke
 	kubectl apply -f deployment.yaml -n pipeline-demo
 
 rolling-update:
